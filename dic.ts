@@ -23,8 +23,9 @@ data.split("\n").forEach((line) => {
   previousColumnsAmount = rowNumbers.length
     
   rowNumbers.forEach((n, i) => {
-    if(!res[i + shiftToNext]) res[i + shiftToNext] = []
-    res[i + shiftToNext]!.push(+n)
+    const realIndex = i + shiftToNext
+    if(!res[realIndex]) res[realIndex] = []
+    res[realIndex]!.push(+n)
   })  
 }) 
 
