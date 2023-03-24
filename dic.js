@@ -4,25 +4,26 @@ function fileread(filename) {
 }
 var fs = require("fs");
 var data = fileread('./data.text').toString();
-var res = [];
+var satellitesData = [];
 var shiftToNext = 0;
 var previousColumnsAmount = 0;
 data.split("\n").forEach(function (line) {
     var rowNumbers = line.replace(/\-/g, " -").trim().split(/\s+/);
     if (rowNumbers.length <= 1) {
         shiftToNext += previousColumnsAmount;
+        previousColumnsAmount = 0;
         return;
     }
     previousColumnsAmount = rowNumbers.length;
     rowNumbers.forEach(function (n, i) {
-        var satellite = res[i + shiftToNext];
-        if (!satellite)
-            res[i + shiftToNext] = [];
-        res[i + shiftToNext].push(+n);
+        var realIndex = i + shiftToNext;
+        if (!satellitesData[realIndex])
+            satellitesData[realIndex] = [];
+        satellitesData[realIndex].push(+n);
     });
 });
 var dic = new Map();
-res.forEach(function (nums) {
+satellitesData.forEach(function (nums) {
     dic.set(nums[0], nums.splice(1));
 });
 console.log(dic);
