@@ -6,7 +6,7 @@ function fileread(filename: string)
 var fs =require("fs");
 var data: string = fileread('./data.text').toString();
 
-let satellitesData = [] as number[][]
+const satellitesData: number[][] = []
 let shiftToNext = 0
 let previousColumnsAmount = 0
 
