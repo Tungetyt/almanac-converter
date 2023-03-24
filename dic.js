@@ -7,19 +7,23 @@ var data = fileread('./data.text').toString();
 var res = [];
 var shiftToNext = 0;
 var previousColumnsAmount = 0;
-data.split("\n").forEach(function (line, i) {
-    var numbers = line.replace(/\-/g, " -").trim().split(/\s+/);
-    if (numbers.length <= 1) {
+data.split("\n").forEach(function (line) {
+    var rowNumbers = line.replace(/\-/g, " -").trim().split(/\s+/);
+    if (rowNumbers.length <= 1) {
         shiftToNext += previousColumnsAmount;
+        return;
     }
-    previousColumnsAmount = numbers.length;
-    numbers.forEach(function (n, i) {
+    previousColumnsAmount = rowNumbers.length;
+    rowNumbers.forEach(function (n, i) {
         var satellite = res[i + shiftToNext];
         if (!satellite)
             res[i + shiftToNext] = [];
+        if (Number.isNaN(n))
+            return;
         res[i + shiftToNext].push(+n);
     });
 });
+//res = res.filter(x => x)
 var dic = new Map();
 res.forEach(function (nums) {
     dic.set(nums[0], nums.splice(1));
