@@ -25,7 +25,6 @@ data.split("\n").forEach((line) => {
   rowNumbers.forEach((n, i) => {
     const satellite = res[i + shiftToNext] 
     if(!satellite) res[i + shiftToNext] = []
-    if(Number.isNaN(n)) return
     res[i + shiftToNext]!.push(+n)
   })  
 }) 

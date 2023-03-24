@@ -18,12 +18,9 @@ data.split("\n").forEach(function (line) {
         var satellite = res[i + shiftToNext];
         if (!satellite)
             res[i + shiftToNext] = [];
-        if (Number.isNaN(n))
-            return;
         res[i + shiftToNext].push(+n);
     });
 });
-//res = res.filter(x => x)
 var dic = new Map();
 res.forEach(function (nums) {
     dic.set(nums[0], nums.splice(1));
