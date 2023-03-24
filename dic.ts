@@ -1,7 +1,9 @@
 const fs = require('fs')
-const data: string = fs.readFileSync('./data.text').toString()
+const data: string = fs.readFileSync('./data.txt').toString()
 
-const satellitesData: number[][] = []
+type SatelliteData = number[]
+
+const satellitesData: SatelliteData[] = []
 let lastIndex = 0
 let previousColumnsAmount = 0
 
@@ -29,7 +31,7 @@ data.split('\n').forEach((line) => {
   })
 })
 
-const dic = new Map<number, number[]>()
+const dic = new Map<number, SatelliteData>()
 
 satellitesData.forEach((nums) => {
   dic.set(nums[0]!, nums.splice(1))
