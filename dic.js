@@ -1,14 +1,11 @@
-function fileread(filename) {
-    var contents = fs.readFileSync(filename);
-    return contents;
-}
-var fs = require("fs");
-var data = fileread('./data.text').toString();
+var fs = require('fs');
+var data = fs.readFileSync('./data.text').toString();
 var satellitesData = [];
 var shiftToNext = 0;
 var previousColumnsAmount = 0;
-data.split("\n").forEach(function (line) {
-    var rowNumbers = line.replace(/\-/g, " -").trim().split(/\s+/);
+data.split('\n').forEach(function (line) {
+    var rowNumbers = line.replace(/\-/g, ' -').trim().split(/\s+/);
+    // Empty row
     if (rowNumbers.length <= 1) {
         shiftToNext += previousColumnsAmount;
         previousColumnsAmount = 0;
