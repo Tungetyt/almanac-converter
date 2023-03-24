@@ -8,7 +8,7 @@ let lastIndex = 0
 let previousColumnsAmount = 0
 
 data.split('\n').forEach((line) => {
-  const rowNumbers = line.replace(/\-/g, ' -').trim().split(/\s+/)
+  const rowNumbers = line.replace(/\-/g, ' -').trim().split(/\s+/).map(n => Number(n))
 
   // Empty row
   if (rowNumbers.length <= 1) {
@@ -27,7 +27,7 @@ data.split('\n').forEach((line) => {
   rowNumbers.forEach((n, i) => {
     const realIndex = i + lastIndex
     if (!satellitesData[realIndex]) satellitesData[realIndex] = []
-    satellitesData[realIndex]!.push(+n)
+    satellitesData[realIndex]!.push(n)
   })
 })
 
