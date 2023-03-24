@@ -23,8 +23,8 @@ data.split("\n").forEach((line) => {
   previousColumnsAmount = rowNumbers.length
     
   rowNumbers.forEach((n, i) => {
-    const satellite = res[i + shiftToNext] 
-    if(!satellite) res[i + shiftToNext] = []
+    const satelliteNumbers = res[i + shiftToNext] 
+    if(!satelliteNumbers) res[i + shiftToNext] = []
     res[i + shiftToNext]!.push(+n)
   })  
 }) 
