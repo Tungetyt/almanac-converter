@@ -2,7 +2,7 @@ const fs = require('fs')
 const data: string = fs.readFileSync('./data.text').toString()
 
 const satellitesData: number[][] = []
-let shiftToNext = 0
+let lastIndex = 0
 let previousColumnsAmount = 0
 
 data.split('\n').forEach((line) => {
@@ -10,7 +10,7 @@ data.split('\n').forEach((line) => {
 
   // Empty row
   if (rowNumbers.length <= 1) {
-    shiftToNext += previousColumnsAmount
+    lastIndex += previousColumnsAmount
     previousColumnsAmount = 0
     return
   }
@@ -18,7 +18,7 @@ data.split('\n').forEach((line) => {
   previousColumnsAmount = rowNumbers.length
 
   rowNumbers.forEach((n, i) => {
-    const realIndex = i + shiftToNext
+    const realIndex = i + lastIndex
     if (!satellitesData[realIndex]) satellitesData[realIndex] = []
     satellitesData[realIndex]!.push(+n)
   })
