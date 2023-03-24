@@ -6,10 +6,8 @@ function fileread(filename: string)
 var fs =require("fs");
 var data: string = fileread('./data.text').toString();
 
-let res = [] as number[][]
-
+let satellitesData = [] as number[][]
 let shiftToNext = 0
-
 let previousColumnsAmount = 0
 
 data.split("\n").forEach((line) => {
@@ -17,6 +15,7 @@ data.split("\n").forEach((line) => {
 
   if(rowNumbers.length <= 1) {
     shiftToNext += previousColumnsAmount 
+    previousColumnsAmount = 0
     return
   }
 
@@ -24,14 +23,14 @@ data.split("\n").forEach((line) => {
     
   rowNumbers.forEach((n, i) => {
     const realIndex = i + shiftToNext
-    if(!res[realIndex]) res[realIndex] = []
-    res[realIndex]!.push(+n)
+    if(!satellitesData[realIndex]) satellitesData[realIndex] = []
+    satellitesData[realIndex]!.push(+n)
   })  
 }) 
 
 const dic = new Map<number, number[]>()
 
-res.forEach((nums) => {
+satellitesData.forEach((nums) => {
   dic.set(nums[0]!, nums.splice(1))
 })
 
