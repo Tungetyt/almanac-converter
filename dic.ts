@@ -10,8 +10,13 @@ data.split('\n').forEach((line) => {
 
   // Empty row
   if (rowNumbers.length <= 1) {
+    // Increase index, in order to populate new arrays
     lastIndex += previousColumnsAmount
+
+    // In case next row will also be empty
     previousColumnsAmount = 0
+
+    // Go to the next row
     return
   }
 
