@@ -8,18 +8,15 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
     .split('\n')
     .reduce(
       ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
-        let rowNumbers: number[] = []
-
-        try {
-          rowNumbers = line
+        let rowNumbers = line
           .replace(/\-/g, ' -')
           .trim()
           .split(/\s+/)
-          .filter(n => n)
+          .filter((n) => n)
           .map((n) => Number(n))
-        } catch(err) {
-          throw new Error("Wrong data format. Expected only numbers to appear.")
-        }
+
+        if (rowNumbers.some((n) => isNaN(n)))
+          throw new Error('Wrong data format. Expected only numbers to appear.')
 
         // Empty row
         if (rowNumbers.length < 1) {
