@@ -28,6 +28,8 @@ describe('convertAlmanac', () => {
   it('should throw an error if the data format is incorrect', () => {
     expect(() => {
       convertAlmanac('./data__invalid.txt')
-    }).toThrow("Wrong data format. Expected only numbers to appear.")
+    }).toThrow(
+      'The data format is incorrect. Only numerical values are allowed.'
+    )
   })
 })

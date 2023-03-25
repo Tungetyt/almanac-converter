@@ -18,7 +18,9 @@ export const convertAlmanac = (
           .map((n) => Number(n))
 
         if (rowNumbers.some((n) => isNaN(n)))
-          throw new Error('Wrong data format. Expected only numbers to appear.')
+          throw new Error(
+            'The data format is incorrect. Only numerical values are allowed.'
+          )
 
         // Empty row
         if (rowNumbers.length === 0) {
