@@ -3,11 +3,10 @@ const data: string = fs.readFileSync('./data.txt').toString()
 
 type SatelliteData = number[]
 
-const satellitesData: SatelliteData[] = []
 let lastIndex = 0
 let previousColumnsAmount = 0
 
-data.split('\n').forEach((line) => {
+const satellitesData = data.split('\n').reduce((satellitesData, line) => {
   const rowNumbers = line.replace(/\-/g, ' -').trim().split(/\s+/).map(n => Number(n))
 
   // Empty row
@@ -19,7 +18,7 @@ data.split('\n').forEach((line) => {
     previousColumnsAmount = 0
 
     // Go to the next row
-    return
+    return satellitesData
   }
 
   previousColumnsAmount = rowNumbers.length
@@ -29,7 +28,9 @@ data.split('\n').forEach((line) => {
     if (!satellitesData[realIndex]) satellitesData[realIndex] = []
     satellitesData[realIndex]!.push(n)
   })
-})
+
+  return satellitesData
+}, [] as SatelliteData[])
 
 const dic = new Map<number, SatelliteData>()
 
