@@ -3,10 +3,10 @@ type SatelliteData = number[]
 
 export const convertAlmanac = (
   pathToAlmanacFile = './data.txt'
-): Map<number, SatelliteData> => {
-  const data: string = fs.readFileSync(pathToAlmanacFile).toString()
-
-  return data
+): Map<number, SatelliteData> =>
+  fs
+    .readFileSync(pathToAlmanacFile)
+    .toString()
     .split('\n')
     .reduce(
       ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
@@ -61,4 +61,3 @@ export const convertAlmanac = (
       if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
-}
