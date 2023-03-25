@@ -1,7 +1,9 @@
 import * as fs from 'fs'
 type SatelliteData = number[]
 
-export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
+export const convertAlmanac = (
+  pathToAlmanacFile = './data.txt'
+): Map<number, SatelliteData> => {
   const data: string = fs.readFileSync(pathToAlmanacFile).toString()
 
   return data
@@ -9,7 +11,7 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
     .reduce(
       ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
         const rowNumbers = line
-          .replace(/\-/g, ' -')
+          .replace(/-/g, ' -')
           .trim()
           .split(/\s+/)
           .filter((n) => n)
@@ -19,7 +21,7 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
           throw new Error('Wrong data format. Expected only numbers to appear.')
 
         // Empty row
-        if (rowNumbers.length < 1) {
+        if (rowNumbers.length === 0) {
           // Increase index, in order to populate new arrays
           lastIndex += previousColumnsAmount
 
@@ -38,8 +40,9 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
 
         rowNumbers.forEach((n, i) => {
           const realIndex = i + lastIndex
-          if (!satellitesData[realIndex]) satellitesData[realIndex] = []
-          satellitesData[realIndex]!.push(n)
+          if (satellitesData[realIndex] === undefined)
+            satellitesData[realIndex] = []
+          satellitesData[realIndex]?.push(n)
         })
 
         return {
@@ -55,7 +58,7 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
       }
     )
     .satellitesData.reduce((acc, nums) => {
-      acc.set(nums[0]!, nums.splice(1))
+      if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
 }
