@@ -14,9 +14,9 @@ describe('convertAlmanac', () => {
     expect(result.size).toBe(1)
   })
 
-  // it('should handle no satellite', () => {
-  //   const result = convertAlmanac('./data__no-satellite.txt')
-  //   expect( result).toMatchSnapshot()
-  //   expect(result.size).toBe(0)
-  // })
+  it('should handle no satellite', () => {
+    const result = convertAlmanac('./data__no-satellite.txt')
+    expect( result).toMatchSnapshot()
+    expect(result.size).toBe(0)
+  })
 })
