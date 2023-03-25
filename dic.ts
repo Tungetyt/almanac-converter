@@ -3,39 +3,55 @@ const data: string = fs.readFileSync('./data.txt').toString()
 
 type SatelliteData = number[]
 
-let lastIndex = 0
-let previousColumnsAmount = 0
+const dic = data
+  .split('\n')
+  .reduce(
+    ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
+      const rowNumbers = line
+        .replace(/\-/g, ' -')
+        .trim()
+        .split(/\s+/)
+        .map((n) => Number(n))
 
-const satellitesData = data.split('\n').reduce((satellitesData, line) => {
-  const rowNumbers = line.replace(/\-/g, ' -').trim().split(/\s+/).map(n => Number(n))
+      // Empty row
+      if (rowNumbers.length <= 1) {
+        // Increase index, in order to populate new arrays
+        lastIndex += previousColumnsAmount
 
-  // Empty row
-  if (rowNumbers.length <= 1) {
-    // Increase index, in order to populate new arrays
-    lastIndex += previousColumnsAmount
+        // In case next row will also be empty
+        previousColumnsAmount = 0
 
-    // In case next row will also be empty
-    previousColumnsAmount = 0
+        // Go to the next row
+        return {
+          satellitesData,
+          previousColumnsAmount,
+          lastIndex,
+        }
+      }
 
-    // Go to the next row
-    return satellitesData
-  }
+      previousColumnsAmount = rowNumbers.length
 
-  previousColumnsAmount = rowNumbers.length
+      rowNumbers.forEach((n, i) => {
+        const realIndex = i + lastIndex
+        if (!satellitesData[realIndex]) satellitesData[realIndex] = []
+        satellitesData[realIndex]!.push(n)
+      })
 
-  rowNumbers.forEach((n, i) => {
-    const realIndex = i + lastIndex
-    if (!satellitesData[realIndex]) satellitesData[realIndex] = []
-    satellitesData[realIndex]!.push(n)
-  })
-
-  return satellitesData
-}, [] as SatelliteData[])
-
-const dic = new Map<number, SatelliteData>()
-
-satellitesData.forEach((nums) => {
-  dic.set(nums[0]!, nums.splice(1))
-})
+      return {
+        satellitesData,
+        previousColumnsAmount,
+        lastIndex,
+      }
+    },
+    {
+      satellitesData: [] as SatelliteData[],
+      lastIndex: 0,
+      previousColumnsAmount: 0,
+    }
+  )
+  .satellitesData.reduce((acc, nums) => {
+    acc.set(nums[0]!, nums.splice(1))
+    return acc
+  }, new Map<number, SatelliteData>())
 
 console.log(dic)
