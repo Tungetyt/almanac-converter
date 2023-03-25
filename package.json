@@ -1,8 +1,7 @@
 {
   "name": "almanac-converter",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A utility for converting satellite almanac data to a map of satellite IDs and associated data",
   "scripts": {
     "test": "vitest",
     "prepare": "husky install"
