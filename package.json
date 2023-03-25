@@ -7,6 +7,7 @@
     "prepare": "husky install"
   },
   "author": "",
+  "main": "main.ts",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.5",
