@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.5",
-    "vitest": "^0.29.7"
+    "vitest": "^0.29.7",
+    "husky": "^8.0.0"
   }
 }
