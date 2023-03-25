@@ -8,7 +8,7 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
     .split('\n')
     .reduce(
       ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
-        let rowNumbers = line
+        const rowNumbers = line
           .replace(/\-/g, ' -')
           .trim()
           .split(/\s+/)
