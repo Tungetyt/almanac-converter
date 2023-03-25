@@ -21,7 +21,6 @@ describe('convertAlmanac', () => {
   it('should handle no satellite', () => {
     const result = convertAlmanac('./data__no-satellite.txt')
     expect(result).toMatchSnapshot()
-    expect(result.size).toBe(0)
     expect(result).toStrictEqual(new Map())
   })
 
