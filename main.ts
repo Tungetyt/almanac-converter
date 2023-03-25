@@ -15,13 +15,14 @@ export const convertAlmanac = (pathToAlmanacFile = './data.txt') => {
           .replace(/\-/g, ' -')
           .trim()
           .split(/\s+/)
+          .filter(n => n)
           .map((n) => Number(n))
         } catch(err) {
           throw new Error("Wrong data format. Expected only numbers to appear.")
         }
 
         // Empty row
-        if (rowNumbers.length <= 1) {
+        if (rowNumbers.length < 1) {
           // Increase index, in order to populate new arrays
           lastIndex += previousColumnsAmount
 

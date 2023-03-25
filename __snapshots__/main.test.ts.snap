@@ -1,10 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convertAlmanac > should handle only one  1`] = `Map {}`;
+exports[`convertAlmanac > should handle no satellite 1`] = `
+Map {
+  1 => [
+    0,
+    0.012394,
+    5153.6,
+    -129.694,
+    53.722,
+    -120.323,
+    405504,
+    2.6975,
+    -0.0004315,
+    0,
+    0,
+    2250,
+  ],
+}
+`;
 
-exports[`convertAlmanac > should handle only one 1`] = `Map {}`;
-
-exports[`convertAlmanac > should handle only one satellite 1`] = `Map {}`;
+exports[`convertAlmanac > should handle only one satellite 1`] = `
+Map {
+  1 => [
+    0,
+    0.012394,
+    5153.6,
+    -129.694,
+    53.722,
+    -120.323,
+    405504,
+    2.6975,
+    -0.0004315,
+    0,
+    0,
+    2250,
+  ],
+}
+`;
 
 exports[`convertAlmanac > should handle unexpected formats to some degree 1`] = `
 Map {
