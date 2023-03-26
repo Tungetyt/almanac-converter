@@ -24,7 +24,7 @@ export const convertAlmanac = (
 
         // Empty row
         if (rowNumbers.length === 0) {
-          // Increase index, in order to populate new arrays
+          // Increase index, in order to populate new satellites
           lastIndex += columnsAmountInLastRow
 
           // In case next row will also be empty
