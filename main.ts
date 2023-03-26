@@ -9,7 +9,7 @@ export const convertAlmanac = (
     .toString()
     .split('\n')
     .reduce(
-      ({ lastIndex, previousColumnsAmount, satellitesData }, line) => {
+      ({ lastIndex, columnsAmountInLastRow, satellitesData }, line) => {
         const rowNumbers = line
           .replace(/-/g, ' -')
           .trim()
@@ -25,20 +25,20 @@ export const convertAlmanac = (
         // Empty row
         if (rowNumbers.length === 0) {
           // Increase index, in order to populate new arrays
-          lastIndex += previousColumnsAmount
+          lastIndex += columnsAmountInLastRow
 
           // In case next row will also be empty
-          previousColumnsAmount = 0
+          columnsAmountInLastRow = 0
 
           // Go to the next row
           return {
             satellitesData,
-            previousColumnsAmount,
+            columnsAmountInLastRow,
             lastIndex,
           }
         }
 
-        previousColumnsAmount = rowNumbers.length
+        columnsAmountInLastRow = rowNumbers.length
 
         rowNumbers.forEach((n, i) => {
           const realIndex = i + lastIndex
@@ -55,17 +55,18 @@ export const convertAlmanac = (
 
         return {
           satellitesData,
-          previousColumnsAmount,
+          columnsAmountInLastRow,
           lastIndex,
         }
       },
       {
         satellitesData: [] as SatelliteData[],
         lastIndex: 0,
-        previousColumnsAmount: 0,
+        columnsAmountInLastRow: 0,
       }
     )
     .satellitesData.reduce((acc, nums) => {
+      // Array to map
       if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
