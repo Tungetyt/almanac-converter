@@ -43,11 +43,13 @@ export const convertAlmanac = (
         rowNumbers.forEach((n, i) => {
           const realIndex = i + lastIndex
 
+          // New satellite
           if (satellitesData[realIndex] === undefined) {
             satellitesData[realIndex] = [n]
             return
           }
 
+          // Populate existing satellite
           satellitesData[realIndex]?.push(n)
         })
 
