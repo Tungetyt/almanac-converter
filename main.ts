@@ -42,8 +42,12 @@ export const convertAlmanac = (
 
         rowNumbers.forEach((n, i) => {
           const realIndex = i + lastIndex
-          if (satellitesData[realIndex] === undefined)
-            satellitesData[realIndex] = []
+
+          if (satellitesData[realIndex] === undefined) {
+            satellitesData[realIndex] = [n]
+            return
+          }
+
           satellitesData[realIndex]?.push(n)
         })
 
