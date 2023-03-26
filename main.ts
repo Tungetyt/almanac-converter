@@ -15,9 +15,9 @@ export const convertAlmanac = (
           .trim()
           .split(/\s+/)
           .filter((n) => n)
-          .map((n) => Number(n))
+          .map(Number)
 
-        if (rowNumbers.some((n) => isNaN(n)))
+        if (rowNumbers.some(isNaN))
           throw new Error(
             'The data format is incorrect. Only numerical values are allowed.'
           )
