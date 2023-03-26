@@ -66,7 +66,7 @@ export const convertAlmanac = (
       }
     )
     .satellitesData.reduce((acc, nums) => {
-      // Array to map
+      // Array to Map
       if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
