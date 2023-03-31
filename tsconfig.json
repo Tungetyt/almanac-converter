@@ -15,7 +15,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext"
+    "module": "ESNext",
+    "moduleResolution": "node",
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Strictest"
