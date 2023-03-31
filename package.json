@@ -6,7 +6,7 @@
     "test": "vitest",
     "prepare": "husky install"
   },
-  "author": "",
+  "author": "Michał Kotlicki",
   "main": "AlmanacConverter.ts",
   "license": "ISC",
   "devDependencies": {
