@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convertAlmanac > should handle no satellite 1`] = `Map {}`;
+exports[`AlmanacConverter > should handle no satellite 1`] = `Map {}`;
 
-exports[`convertAlmanac > should handle only one satellite 1`] = `
+exports[`AlmanacConverter > should handle only one satellite 1`] = `
 Map {
   1 => [
     0,
@@ -21,7 +21,7 @@ Map {
 }
 `;
 
-exports[`convertAlmanac > should handle unexpected formats to some degree 1`] = `
+exports[`AlmanacConverter > should handle unexpected formats to some degree 1`] = `
 Map {
   1 => [
     0,

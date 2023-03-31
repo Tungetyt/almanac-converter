@@ -1,57 +1,28 @@
 import * as fs from 'fs'
+
 type SatelliteData = number[]
 
-export const convertAlmanac = (
-  pathToAlmanacFile = './data.txt'
-): Map<number, SatelliteData> =>
-  fs
-    .readFileSync(pathToAlmanacFile)
-    .toString()
-    .split('\n')
-    .reduce(
+export default class AlmanacConverter {
+  constructor(private readonly pathToAlmanacFile = './data.txt') {}
+
+  convert() {
+    const { satellitesData } = this.getAlmanac().reduce(
       ({ lastIndex, columnsAmountInLastRow, satellitesData }, line) => {
-        const rowNumbers = line
-          .replace(/-/g, ' -')
-          .trim()
-          .split(/\s+/)
-          .filter((n) => n)
-          .map(Number)
+        const rowNumbers = this.getRowNumbers(line)
 
-        if (rowNumbers.some(isNaN))
-          throw new Error(
-            'The data format is incorrect. Only numerical values are allowed.'
-          )
+        this.validateAlmanacData(rowNumbers)
 
-        // Empty row
         if (rowNumbers.length === 0) {
-          // Increase index, in order to populate new satellites
-          lastIndex += columnsAmountInLastRow
-
-          // In case next row will also be empty
-          columnsAmountInLastRow = 0
-
-          // Go to the next row
-          return {
-            satellitesData,
-            columnsAmountInLastRow,
+          return this.handleEmptyRow(
             lastIndex,
-          }
+            columnsAmountInLastRow,
+            satellitesData
+          )
         }
 
         columnsAmountInLastRow = rowNumbers.length
 
-        rowNumbers.forEach((n, i) => {
-          const realIndex = i + lastIndex
-
-          // New satellite
-          if (satellitesData[realIndex] === undefined) {
-            satellitesData[realIndex] = [n]
-            return
-          }
-
-          // Populate existing satellite
-          satellitesData[realIndex]?.push(n)
-        })
+        this.populateSatellites(rowNumbers, lastIndex, satellitesData)
 
         return {
           satellitesData,
@@ -65,8 +36,72 @@ export const convertAlmanac = (
         columnsAmountInLastRow: 0,
       }
     )
-    .satellitesData.reduce((acc, nums) => {
-      // Array to Map
+
+    return this.arrayToMap(satellitesData)
+  }
+
+  private arrayToMap(satellitesData: SatelliteData[]) {
+    return satellitesData.reduce((acc, nums) => {
       if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
+  }
+
+  private handleEmptyRow(
+    lastIndex: number,
+    columnsAmountInLastRow: number,
+    satellitesData: SatelliteData[]
+  ) {
+    // Increase index, in order to populate new satellites
+    lastIndex += columnsAmountInLastRow
+
+    // In case next row will also be empty
+    columnsAmountInLastRow = 0
+
+    // Go to the next row
+    return {
+      satellitesData,
+      columnsAmountInLastRow,
+      lastIndex,
+    }
+  }
+
+  private getAlmanac() {
+    return fs.readFileSync(this.pathToAlmanacFile).toString().split('\n')
+  }
+
+  private validateAlmanacData(rowNumbers: number[]) {
+    if (rowNumbers.some(Number.isNaN))
+      throw new Error(
+        'The data format is incorrect. Only numerical values are allowed.'
+      )
+  }
+
+  private getRowNumbers(line: string) {
+    return line
+      .replace(/-/g, ' -')
+      .trim()
+      .split(/\s+/)
+      .filter((n) => n)
+      .map(Number)
+  }
+
+  private populateSatellites(
+    rowNumbers: number[],
+    lastIndex: number,
+    satellitesData: SatelliteData[]
+  ) {
+    rowNumbers.forEach((n, i) => {
+      const realIndex = i + lastIndex
+
+      // New satellite
+      if (satellitesData[realIndex] === undefined) {
+        satellitesData[realIndex] = [n]
+        return
+      }
+
+      // Populate existing satellite
+      satellitesData[realIndex]?.push(n)
+    })
+  }
+}
