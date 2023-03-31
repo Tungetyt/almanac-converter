@@ -12,13 +12,12 @@ export default class AlmanacConverter {
 
         this.validateAlmanacData(rowNumbers)
 
-        if (rowNumbers.length === 0) {
+        if (rowNumbers.length === 0)
           return this.handleEmptyRow(
             lastIndex,
             columnsAmountInLastRow,
             satellitesData
           )
-        }
 
         columnsAmountInLastRow = rowNumbers.length
 
@@ -27,13 +26,13 @@ export default class AlmanacConverter {
         return {
           satellitesData,
           columnsAmountInLastRow,
-          lastIndex,
+          lastIndex
         }
       },
       {
         satellitesData: [] as SatelliteData[],
         lastIndex: 0,
-        columnsAmountInLastRow: 0,
+        columnsAmountInLastRow: 0
       }
     )
 
@@ -62,7 +61,7 @@ export default class AlmanacConverter {
     return {
       satellitesData,
       columnsAmountInLastRow,
-      lastIndex,
+      lastIndex
     }
   }
 
