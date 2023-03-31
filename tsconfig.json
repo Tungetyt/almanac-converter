@@ -11,13 +11,11 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-
-    "importsNotUsedAsValues": "error",
-    "checkJs": true,
-
+    "verbatimModuleSyntax": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Strictest"
