@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import AlmanacConverter from './main'
+import AlmanacConverter from './AlmanacConverter'
 
 describe('AlmanacConverter', () => {
   it('should handle unexpected formats to some degree', () => {

@@ -7,7 +7,7 @@
     "prepare": "husky install"
   },
   "author": "",
-  "main": "main.ts",
+  "main": "AlmanacConverter.ts",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.5",
