@@ -79,7 +79,6 @@ export default class AlmanacConverter {
   private getRowNumbers(line: string) {
     return line
       .replace(/-/g, ' -')
-      .trim()
       .split(/\s+/)
       .filter((n) => n)
       .map(Number)
