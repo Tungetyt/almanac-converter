@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-tsc AlmanacConverter.ts --noEmit
+tsc AlmanacConverter.ts
 pnpm exec vitest run
 npx lint-staged
 
