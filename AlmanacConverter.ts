@@ -13,7 +13,7 @@ export default class AlmanacConverter {
         this.validateAlmanacData(rowNumbers)
 
         if (rowNumbers.length === 0)
-          return this.handleEmptyRow(
+          return this.processEmptyRow(
             lastIndex,
             columnsAmountInLastRow,
             satellitesData
@@ -48,7 +48,7 @@ export default class AlmanacConverter {
     }, new Map<number, SatelliteData>())
   }
 
-  private handleEmptyRow(
+  private processEmptyRow(
     lastIndex: number,
     columnsAmountInLastRow: number,
     satellitesData: SatelliteData[]
