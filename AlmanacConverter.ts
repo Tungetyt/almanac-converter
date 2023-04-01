@@ -6,7 +6,13 @@ export default class AlmanacConverter {
   constructor(private readonly pathToAlmanacFile = './data.txt') {}
 
   convert() {
-    const { satellitesData } = this.getAlmanac().reduce(
+    const satellitesData = this.convertToArray()
+
+    return this.arrayToMap(satellitesData)
+  }
+
+  private convertToArray() {
+    return this.getAlmanac().reduce(
       ({ lastIndex, columnsAmountInLastRow, satellitesData }, line) => {
         const rowNumbers = this.getRowNumbers(line)
 
@@ -34,9 +40,7 @@ export default class AlmanacConverter {
         lastIndex: 0,
         columnsAmountInLastRow: 0
       }
-    )
-
-    return this.arrayToMap(satellitesData)
+    ).satellitesData
   }
 
   private arrayToMap(satellitesData: SatelliteData[]) {
