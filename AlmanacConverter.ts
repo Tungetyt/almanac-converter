@@ -41,7 +41,9 @@ export default class AlmanacConverter {
 
   private arrayToMap(satellitesData: SatelliteData[]) {
     return satellitesData.reduce((acc, nums) => {
-      if (nums[0] !== undefined) acc.set(nums[0], nums.splice(1))
+      if (nums[0] === undefined) throw new Error('Unexpected undefined')
+
+      acc.set(nums[0], nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
   }
