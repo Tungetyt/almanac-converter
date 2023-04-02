@@ -1,7 +1,15 @@
 import * as fs from 'fs'
+import { AssertionError } from 'assert'
 
 // List of indexes with coordinates of the satellites
 type SatelliteData = number[]
+
+function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
+  if (val === undefined || val === null)
+    throw new AssertionError({
+      message: `Expected 'val' to be defined, but received ${val}`
+    })
+}
 
 export default class AlmanacConverter {
   constructor(private readonly pathToAlmanacFile = './data.txt') {}
@@ -47,15 +55,11 @@ export default class AlmanacConverter {
   private arrayToMap(satellitesData: SatelliteData[]) {
     return satellitesData.reduce((acc, nums) => {
       const realIndex = nums[0]
-      this.validateExistence(realIndex)
+      assertIsDefined<typeof realIndex>(realIndex)
 
       acc.set(realIndex, nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
-  }
-
-  private validateExistence<T>(data: T | undefined): asserts data is T {
-    if (data === undefined) throw new Error('Unexpected undefined')
   }
 
   private processEmptyRow(
