@@ -1,15 +1,8 @@
 import * as fs from 'fs'
-import { AssertionError } from 'assert'
+import { assertIsDefined } from './utils'
 
 // List of indexes with coordinates of the satellites
 type SatelliteData = number[]
-
-function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
-  if (val === undefined || val === null)
-    throw new AssertionError({
-      message: `Expected 'val' to be defined, but received ${val}`
-    })
-}
 
 export default class AlmanacConverter {
   constructor(private readonly pathToAlmanacFile = './data.txt') {}
