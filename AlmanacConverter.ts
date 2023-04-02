@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 
+// List of indexes with coordinates of the satellites
 type SatelliteData = number[]
 
 export default class AlmanacConverter {
@@ -13,32 +14,30 @@ export default class AlmanacConverter {
 
   private convertToArray() {
     return this.getAlmanac().reduce(
-      ({ lastIndex, columnsAmountInLastRow, satellitesData }, line) => {
+      ({ satellitesData, satellitesAmountInLastRow, lastIndex }, line) => {
         const rowNumbers = this.getRowNumbers(line)
 
         this.validateAlmanacData(rowNumbers)
 
         if (rowNumbers.length === 0)
           return this.processEmptyRow(
-            lastIndex,
-            columnsAmountInLastRow,
-            satellitesData
+            satellitesData,
+            satellitesAmountInLastRow,
+            lastIndex
           )
 
-        columnsAmountInLastRow = rowNumbers.length
-
-        this.populateSatellites(rowNumbers, lastIndex, satellitesData)
+        this.populateSatellites(satellitesData, rowNumbers, lastIndex)
 
         return {
           satellitesData,
-          columnsAmountInLastRow,
+          satellitesAmountInLastRow: rowNumbers.length,
           lastIndex
         }
       },
       {
         satellitesData: [] as SatelliteData[],
-        lastIndex: 0,
-        columnsAmountInLastRow: 0
+        satellitesAmountInLastRow: 0,
+        lastIndex: 0
       }
     ).satellitesData
   }
@@ -53,20 +52,20 @@ export default class AlmanacConverter {
   }
 
   private processEmptyRow(
-    lastIndex: number,
-    columnsAmountInLastRow: number,
-    satellitesData: SatelliteData[]
+    satellitesData: SatelliteData[],
+    satellitesAmountInLastRow: number,
+    lastIndex: number
   ) {
     // Increase index, in order to populate new satellites
-    lastIndex += columnsAmountInLastRow
+    lastIndex += satellitesAmountInLastRow
 
     // In case next row will also be empty
-    columnsAmountInLastRow = 0
+    satellitesAmountInLastRow = 0
 
     // Go to the next row
     return {
       satellitesData,
-      columnsAmountInLastRow,
+      satellitesAmountInLastRow,
       lastIndex
     }
   }
@@ -91,9 +90,9 @@ export default class AlmanacConverter {
   }
 
   private populateSatellites(
+    satellitesData: SatelliteData[],
     rowNumbers: number[],
-    lastIndex: number,
-    satellitesData: SatelliteData[]
+    lastIndex: number
   ) {
     rowNumbers.forEach((n, i) => {
       const realIndex = i + lastIndex
