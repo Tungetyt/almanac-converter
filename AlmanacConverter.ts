@@ -47,17 +47,15 @@ export default class AlmanacConverter {
   private arrayToMap(satellitesData: SatelliteData[]) {
     return satellitesData.reduce((acc, nums) => {
       const realIndex = nums[0]
-      this.validateIndex(realIndex)
+      this.validateExistence(realIndex)
 
       acc.set(realIndex, nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
   }
 
-  private validateIndex(
-    realIndex: number | undefined
-  ): asserts realIndex is number {
-    if (realIndex === undefined) throw new Error('Unexpected undefined')
+  private validateExistence<T>(data: T | undefined): asserts data is T {
+    if (data === undefined) throw new Error('Unexpected undefined')
   }
 
   private processEmptyRow(
