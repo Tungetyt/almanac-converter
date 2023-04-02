@@ -100,12 +100,8 @@ export default class AlmanacConverter {
       (acc, n, i) => {
         const realIndex = i + lastIndex
 
-        if (acc[realIndex] === undefined) {
-          acc[realIndex] = [n]
-        } else {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          acc[realIndex] = [...acc[realIndex]!, n]
-        }
+        if (acc[realIndex] === undefined) acc[realIndex] = [n]
+        else acc[realIndex] = [...acc[realIndex]!, n]
 
         return acc
       },
