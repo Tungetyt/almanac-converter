@@ -58,17 +58,10 @@ export default class AlmanacConverter {
     satellitesAmountInLastRow: number,
     lastIndex: number
   ) {
-    // Increase index, in order to populate new satellites
-    lastIndex += satellitesAmountInLastRow
-
-    // In case next row will also be empty
-    satellitesAmountInLastRow = 0
-
-    // Go to the next row
     return {
       satellitesData,
-      satellitesAmountInLastRow,
-      lastIndex
+      satellitesAmountInLastRow: 0, // In case next row will also be empty
+      lastIndex: lastIndex + satellitesAmountInLastRow // Increase index, in order to populate new satellites
     }
   }
 
