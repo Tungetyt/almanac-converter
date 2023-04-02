@@ -18,7 +18,7 @@ export default class AlmanacConverter {
       ({ satellitesData, satellitesAmountInLastRow, lastIndex }, line) => {
         const rowNumbers = this.getRowNumbers(line)
 
-        this.validateAlmanacData(rowNumbers)
+        this.validateRowNumbers(rowNumbers)
 
         if (rowNumbers.length === 0)
           return this.processEmptyRow(
@@ -71,7 +71,7 @@ export default class AlmanacConverter {
     return fs.readFileSync(this.pathToAlmanacFile).toString().split('\n')
   }
 
-  private validateAlmanacData(rowNumbers: number[]) {
+  private validateRowNumbers(rowNumbers: number[]) {
     if (rowNumbers.some(Number.isNaN))
       throw new Error(
         'The data format is incorrect. Only numerical values are allowed.'
