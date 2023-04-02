@@ -46,11 +46,18 @@ export default class AlmanacConverter {
 
   private arrayToMap(satellitesData: SatelliteData[]) {
     return satellitesData.reduce((acc, nums) => {
-      if (nums[0] === undefined) throw new Error('Unexpected undefined')
+      const realIndex = nums[0]
+      this.validateIndex(realIndex)
 
-      acc.set(nums[0], nums.splice(1))
+      acc.set(realIndex, nums.splice(1))
       return acc
     }, new Map<number, SatelliteData>())
+  }
+
+  private validateIndex(
+    realIndex: number | undefined
+  ): asserts realIndex is number {
+    if (realIndex === undefined) throw new Error('Unexpected undefined')
   }
 
   private processEmptyRow(
