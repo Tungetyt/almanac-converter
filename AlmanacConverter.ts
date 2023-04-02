@@ -26,10 +26,12 @@ export default class AlmanacConverter {
             lastIndex
           )
 
-        this.populateSatellites(satellitesData, rowNumbers, lastIndex)
-
         return {
-          satellitesData,
+          satellitesData: this.getNextSatelliteData(
+            satellitesData,
+            rowNumbers,
+            lastIndex
+          ),
           satellitesAmountInLastRow: rowNumbers.length,
           lastIndex
         }
@@ -89,22 +91,25 @@ export default class AlmanacConverter {
       .map(Number)
   }
 
-  private populateSatellites(
+  private getNextSatelliteData(
     satellitesData: SatelliteData[],
     rowNumbers: number[],
     lastIndex: number
-  ) {
-    rowNumbers.forEach((n, i) => {
-      const realIndex = i + lastIndex
+  ): SatelliteData[] {
+    return rowNumbers.reduce(
+      (acc, n, i) => {
+        const realIndex = i + lastIndex
 
-      // New satellite
-      if (satellitesData[realIndex] === undefined) {
-        satellitesData[realIndex] = [n]
-        return
-      }
+        if (acc[realIndex] === undefined) {
+          acc[realIndex] = [n]
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          acc[realIndex] = [...acc[realIndex]!, n]
+        }
 
-      // Populate existing satellite
-      satellitesData[realIndex]?.push(n)
-    })
+        return acc
+      },
+      [...satellitesData]
+    )
   }
 }
