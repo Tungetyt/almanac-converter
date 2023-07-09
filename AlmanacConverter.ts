@@ -82,7 +82,7 @@ export default class AlmanacConverter {
     return line
       .replace(/-/g, ' -')
       .split(/\s+/)
-      .filter((n) => n)
+      .filter(Boolean)
       .map(Number)
   }
 
